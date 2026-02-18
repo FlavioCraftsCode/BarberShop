@@ -1,0 +1,53 @@
+
+@import "tailwindcss";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300..700&display=swap');
+
+@theme {
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-[#0f0f0f] text-white;
+    font-family: var(--font-sans);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    @apply tracking-tight;
+  }
+
+  ::selection {
+    @apply bg-amber-500/30 text-white;
+  }
+}
+
+@layer components {
+  
+  
+  .btn-vintage {
+    @apply px-8 py-4 font-sans font-semibold uppercase tracking-widest text-sm 
+           transition-all duration-300 rounded-sm shadow-md inline-block text-center cursor-pointer;
+  }
+
+  .btn-primary {
+    
+    @apply px-8 py-4 font-sans font-semibold uppercase tracking-widest text-sm 
+           transition-all duration-300 rounded-sm shadow-md inline-block text-center 
+           bg-amber-600 hover:bg-amber-700 text-black border-none;
+  }
+
+  .btn-outline {
+    @apply px-8 py-4 font-sans font-semibold uppercase tracking-widest text-sm 
+           transition-all duration-300 rounded-sm shadow-md inline-block text-center 
+           border border-amber-600/70 hover:border-amber-500 text-amber-400 
+           hover:text-amber-300 bg-black/20 backdrop-blur-sm;
+  }
+}
