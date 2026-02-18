@@ -1,16 +1,31 @@
-# React + Vite
+# 💈 Vintage Cuts - Barbearia Profissional
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bem-vindo ao repositório da **Vintage Cuts**, uma plataforma moderna de agendamento online para barbearias clássicas. O projeto foca em uma experiência de usuário premium, com design responsivo e interface intuitiva.
 
-Currently, two official plugins are available:
+## 🚀 Demonstração
+O site está online e pode ser acessado pelo link abaixo:
+👉 **[Acessar Vintage Cuts](https://serene-cendol-be65e6.netlify.app/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🛠️ Tecnologias Utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Este projeto foi desenvolvido com as melhores tecnologias do ecossistema JavaScript:
 
-## Expanding the ESLint configuration
+- **React.js**: Biblioteca principal para a interface.
+- **Vite**: Ferramenta de build ultra-rápida.
+- **Tailwind CSS**: Estilização moderna e responsiva.
+- **Lucide React**: Biblioteca de ícones elegantes.
+- **React Router Dom**: Navegação entre páginas.
+- **Render**: Hospedagem do Back-end.
+- **Netlify**: Hospedagem do Front-end.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ✨ Funcionalidades
+
+- [x] **Design Responsivo**: Menu hambúrguer otimizado para não cortar em dispositivos móveis.
+- [x] **Agendamento Online**: Interface fluida para reserva de serviços.
+- [x] **Autenticação**: Sistema de Login e Cadastro para clientes.
+- [x] **Gestão de Perfil**: Visualização de "Meus Agendamentos".
+- [x] **Navegação Suave**: Scroll inteligente entre seções (Home, Sobre, Serviços, Contato).
