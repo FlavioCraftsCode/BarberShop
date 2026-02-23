@@ -1,31 +1,38 @@
-# 💈 Vintage Cuts - Barbearia Profissional
+# 💈 VintageCuts - Sistema de Agendamento Profissional
 
-Bem-vindo ao repositório da **Vintage Cuts**, uma plataforma moderna de agendamento online para barbearias clássicas. O projeto foca em uma experiência de usuário premium, com design responsivo e interface intuitiva.
+O **VintageCuts** é uma plataforma moderna de agendamento online para barbearias, desenvolvida para simplificar a conexão entre o barbeiro e o cliente. O projeto conta com uma interface minimalista e um sistema de gerenciamento em tempo real.
 
-## 🚀 Demonstração
-O site está online e pode ser acessado pelo link abaixo:
-👉 **[Acessar Vintage Cuts](https://serene-cendol-be65e6.netlify.app/)**
+🚀 **Link do Projeto:** [Acesse aqui o VintageCuts](https://delicate-pavlova-f3b7f4.netlify.app/)
+
+---
+
+## 🎯 Sobre o Projeto
+
+Este sistema foi construído para resolver o problema de agendas desorganizadas. Ele oferece uma experiência fluida para o cliente e um controle total para o administrador.
+
+### 👤 Funcionalidades do Usuário (Cliente)
+* **Agendamento Rápido:** Escolha de serviço e horário em poucos cliques.
+* **Área Pessoal:** O cliente pode visualizar e cancelar seus próprios agendamentos.
+* **Segurança:** Autenticação robusta para proteger os dados do usuário.
+
+### 🛠️ Funcionalidades do Administrador
+* **Dashboard Exclusivo:** Visão completa de todos os agendamentos da barbearia.
+* **Controle de Fluxo:** Identificação detalhada de clientes (Nome, E-mail, Contato).
+* **Gestão de Agenda:** Poder de remoção de horários diretamente pelo painel.
+* **Bypass de Segurança:** Acesso administrativo garantido via validação de Token JWT.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-Este projeto foi desenvolvido com as melhores tecnologias do ecossistema JavaScript:
+### **Front-end**
+* **React + TypeScript** (Interface performática e segura)
+* **Tailwind CSS** (Design moderno e responsivo)
+* **Lucide Icons** (Iconografia minimalista)
+* **Vite** (Ambiente de desenvolvimento ultra-rápido)
 
-- **React.js**: Biblioteca principal para a interface.
-- **Vite**: Ferramenta de build ultra-rápida.
-- **Tailwind CSS**: Estilização moderna e responsiva.
-- **Lucide React**: Biblioteca de ícones elegantes.
-- **React Router Dom**: Navegação entre páginas.
-- **Render**: Hospedagem do Back-end.
-- **Netlify**: Hospedagem do Front-end.
-
----
-
-## ✨ Funcionalidades
-
-- [x] **Design Responsivo**: Menu hambúrguer otimizado para não cortar em dispositivos móveis.
-- [x] **Agendamento Online**: Interface fluida para reserva de serviços.
-- [x] **Autenticação**: Sistema de Login e Cadastro para clientes.
-- [x] **Gestão de Perfil**: Visualização de "Meus Agendamentos".
-- [x] **Navegação Suave**: Scroll inteligente entre seções (Home, Sobre, Serviços, Contato).
+### **Back-end**
+* **Node.js & Express** (API REST escalável)
+* **Prisma ORM** (Modelagem de dados e consultas ao banco)
+* **PostgreSQL (Neon DB)** (Banco de dados relacional em nuvem)
+* **JWT (JSON Web Token)** (Autenticação e autorização)
