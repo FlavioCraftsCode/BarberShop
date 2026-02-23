@@ -11,7 +11,8 @@ const BookingSection = ({ user, onOpenAuth }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [myAppointments, setMyAppointments] = useState([]);
 
-  const API_URL = 'https://api-barbershop-zklu.onrender.com/api/appointments';
+  
+  const API_URL = 'https://api-barbershop-zklu.onrender.com';
 
   const [formData, setFormData] = useState({
     date: '',
@@ -26,6 +27,7 @@ const BookingSection = ({ user, onOpenAuth }) => {
     { name: 'Corte Kids', price: 'R$ 40', time: '30 min' },
   ];
 
+  
   const fetchAppointments = async () => {
     if (!user?.id) return;
     setFetchLoading(true);
@@ -33,7 +35,8 @@ const BookingSection = ({ user, onOpenAuth }) => {
     try {
       const token = localStorage.getItem('token');
       if (!token) throw new Error('Token não encontrado');
-      const { data } = await axios.get(API_URL, {
+      
+      const { data } = await axios.get(`${API_URL}/api/appointments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMyAppointments(Array.isArray(data) ? data : []);
@@ -50,6 +53,7 @@ const BookingSection = ({ user, onOpenAuth }) => {
     window.scrollTo(0, 0);
   }, [user, success]);
 
+  
   const handleBooking = async (e) => {
     e.preventDefault();
     if (!user) return;
@@ -73,7 +77,7 @@ const BookingSection = ({ user, onOpenAuth }) => {
       if (!token) throw new Error('Sessão expirada. Faça login novamente.');
 
       await axios.post(
-        API_URL,
+        `${API_URL}/api/appointments`,
         {
           date: selectedDateTime.toISOString(),
           service: formData.service,
@@ -101,11 +105,12 @@ const BookingSection = ({ user, onOpenAuth }) => {
     }
   };
 
+  
   const deleteAppointment = async (id) => {
     if (!window.confirm('Deseja realmente cancelar este agendamento?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${API_URL}/${id}`, {
+      await axios.delete(`${API_URL}/api/appointments/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchAppointments();
@@ -119,18 +124,7 @@ const BookingSection = ({ user, onOpenAuth }) => {
   const isFormValid = formData.date && formData.time;
 
   return (
-    <section
-      className={`
-        min-h-screen
-        bg-[#050505]
-        relative
-        overflow-hidden
-        pt-12               
-        pb-12
-        lg:pt-16            /* Espaço otimizado para a navbar */
-        lg:pb-24
-      `}
-    >
+    <section className="min-h-screen bg-[#050505] relative overflow-hidden pt-12 pb-12 lg:pt-16 lg:pb-24">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 relative z-10">
         <button
           onClick={() => navigate('/')}
@@ -140,7 +134,6 @@ const BookingSection = ({ user, onOpenAuth }) => {
         </button>
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-20 items-start">
-          
           <div className="animate-in fade-in slide-in-from-top-4 duration-700">
             <span className="text-amber-500 font-bold tracking-[0.3em] text-xs lg:text-sm uppercase">
               Reserva Online
@@ -206,7 +199,6 @@ const BookingSection = ({ user, onOpenAuth }) => {
             )}
           </div>
 
-          
           <div className="bg-[#0a0a0a] border border-amber-600/10 p-8 sm:p-10 lg:p-12 shadow-2xl relative rounded-2xl flex items-center justify-center lg:mt-4">
             {!user ? (
               <div className="text-center max-w-md mx-auto py-10">

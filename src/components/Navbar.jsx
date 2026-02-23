@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Scissors, Menu, X, User, LogOut, Calendar } from 'lucide-react';
+import { Scissors, Menu, X, User, LogOut, Calendar, Settings } from 'lucide-react'; 
 import AuthModal from './AuthModal';
 
 const Navbar = ({ user, setUser }) => {
@@ -12,6 +12,11 @@ const Navbar = ({ user, setUser }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const API_URL = 'https://api-barbershop-zklu.onrender.com';
+
+  
+  const isAdmin = user?.role === 'admin' || user?.email === 'futbrasss@gmail.com';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -75,6 +80,14 @@ const Navbar = ({ user, setUser }) => {
     }
   };
 
+  
+  const handleAdminClick = () => {
+    console.log("Navegando para o Painel Administrativo...");
+    navigate('/admin/dashboard');
+    setShowDropdown(false);
+    setIsOpen(false);
+  };
+
   const handleAuthClick = () => {
     setAuthMode('login');
     setShowAuthModal(true);
@@ -112,21 +125,12 @@ const Navbar = ({ user, setUser }) => {
               </span>
             </div>
 
-            
             <div className="hidden md:flex items-center gap-10">
               <div className="flex gap-10 text-[13px] font-bold uppercase tracking-[0.25em] text-zinc-400">
-                <button onClick={() => scrollToSection('home')} className="hover:text-amber-500 transition-all">
-                  Home
-                </button>
-                <button onClick={() => scrollToSection('about')} className="hover:text-amber-500 transition-all">
-                  Sobre
-                </button>
-                <button onClick={() => scrollToSection('service')} className="hover:text-amber-500 transition-all">
-                  Serviços
-                </button>
-                <button onClick={() => scrollToSection('contact')} className="hover:text-amber-500 transition-all">
-                  Contato
-                </button>
+                <button onClick={() => scrollToSection('home')} className="hover:text-amber-500 transition-all">Home</button>
+                <button onClick={() => scrollToSection('about')} className="hover:text-amber-500 transition-all">Sobre</button>
+                <button onClick={() => scrollToSection('service')} className="hover:text-amber-500 transition-all">Serviços</button>
+                <button onClick={() => scrollToSection('contact')} className="hover:text-amber-500 transition-all">Contato</button>
               </div>
 
               <div className="flex items-center gap-8 border-l border-zinc-800 pl-8">
@@ -145,18 +149,24 @@ const Navbar = ({ user, setUser }) => {
                     >
                       <User size={18} />
                       <span className="max-w-[120px] truncate">Olá, {user.name?.split(' ')[0] || 'Cliente'}</span>
-                      <svg
-                        className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
+                      <svg className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
 
                     {showDropdown && (
                       <div className="absolute right-0 mt-4 w-60 bg-[#141414] border border-zinc-800 rounded-xl shadow-2xl py-2.5 z-50">
+                        
+                        {isAdmin && (
+                          <button
+                            onClick={handleAdminClick}
+                            className="w-full text-left px-5 py-3.5 text-[13px] text-amber-500 font-bold hover:bg-zinc-800 transition-all flex items-center gap-3 border-b border-zinc-800/50"
+                          >
+                            <Settings size={18} />
+                            Painel Administrativo
+                          </button>
+                        )}
+
                         <button
                           onClick={handleMyAppointmentsClick}
                           className="w-full text-left px-5 py-3.5 text-[13px] text-zinc-300 hover:bg-zinc-800 hover:text-amber-400 transition-all flex items-center gap-3"
@@ -166,10 +176,7 @@ const Navbar = ({ user, setUser }) => {
                         </button>
                         <div className="border-t border-zinc-800 my-1.5 opacity-50"></div>
                         <button
-                          onClick={() => {
-                            handleLogout();
-                            setShowDropdown(false);
-                          }}
+                          onClick={handleLogout}
                           className="w-full text-left px-5 py-3.5 text-[13px] text-red-400 hover:bg-zinc-800 hover:text-red-300 transition-all flex items-center gap-3"
                         >
                           <LogOut size={18} />
@@ -189,7 +196,6 @@ const Navbar = ({ user, setUser }) => {
               </div>
             </div>
 
-            
             <div className="md:hidden">
               <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none p-2 relative z-[130]">
                 {isOpen ? <X size={32} className="text-amber-500" /> : <Menu size={32} />}
@@ -212,11 +218,20 @@ const Navbar = ({ user, setUser }) => {
                   <div className="h-px w-10 bg-amber-600/30 mx-auto mt-2" />
                 </div>
               )}
-              <button onClick={() => scrollToSection('home')} className="text-2xl font-serif font-bold text-white hover:text-amber-500 transition-all uppercase">HOME</button>
-              <button onClick={() => scrollToSection('about')} className="text-2xl font-serif font-bold text-white hover:text-amber-500 transition-all uppercase">SOBRE</button>
-              <button onClick={() => scrollToSection('service')} className="text-2xl font-serif font-bold text-white hover:text-amber-500 transition-all uppercase">SERVIÇOS</button>
-              <button onClick={() => scrollToSection('contact')} className="text-2xl font-serif font-bold text-white hover:text-amber-500 transition-all uppercase">CONTATO</button>
+              
+              {isAdmin && (
+                <button onClick={handleAdminClick} className="text-xl font-bold text-amber-500 flex items-center gap-2 bg-zinc-900/80 px-6 py-3 rounded-full border border-amber-600/20">
+                  <Settings size={20} /> PAINEL ADM
+                </button>
+              )}
+
+              <button onClick={() => scrollToSection('home')} className="text-2xl font-serif font-bold text-white uppercase">HOME</button>
+              <button onClick={() => scrollToSection('about')} className="text-2xl font-serif font-bold text-white uppercase">SOBRE</button>
+              <button onClick={() => scrollToSection('service')} className="text-2xl font-serif font-bold text-white uppercase">SERVIÇOS</button>
+              <button onClick={() => scrollToSection('contact')} className="text-2xl font-serif font-bold text-white uppercase">CONTATO</button>
+              
               <div className="w-full max-w-[200px] h-px bg-zinc-900 my-4" />
+              
               {!user ? (
                 <button onClick={() => { setIsOpen(false); handleAuthClick(); }} className="text-amber-500 text-sm font-bold uppercase tracking-widest border border-amber-600/20 px-10 py-4 rounded-full w-full max-w-xs text-center">Login / Cadastro</button>
               ) : (

@@ -9,7 +9,7 @@ const MyAppointments = ({ user }) => {
   const navigate = useNavigate();
 
   
-  const API_BASE_URL = 'https://api-barbershop-zklu.onrender.com';
+  const API_URL = 'https://api-barbershop-zklu.onrender.com';
 
   const fetchAppointments = async () => {
     try {
@@ -17,11 +17,10 @@ const MyAppointments = ({ user }) => {
       const token = localStorage.getItem('token');
       
       
-      const { data } = await axios.get(`${API_BASE_URL}/api/appointments`, {
+      const { data } = await axios.get(`${API_URL}/api/appointments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      
       setAppointments(Array.isArray(data) ? data : data.appointments || []);
       
     } catch (err) {
@@ -43,10 +42,11 @@ const MyAppointments = ({ user }) => {
     if (!window.confirm("Deseja cancelar este agendamento?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${API_BASE_URL}/api/appointments/${id}`, {
+      
+      
+      await axios.delete(`${API_URL}/api/appointments/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      
       
       setAppointments(prev => prev.filter(app => (app.id || app._id) !== id));
       
@@ -89,7 +89,6 @@ const MyAppointments = ({ user }) => {
           </button>
         </div>
 
-        
         <div className="grid gap-4">
           {appointments.length === 0 ? (
             <div className="bg-zinc-900/30 border border-zinc-800 p-12 text-center rounded-lg">

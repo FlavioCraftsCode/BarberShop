@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -8,21 +8,35 @@ import Services from './components/Services';
 import Contact from './components/Contact';
 import BookingSection from './components/BookingSection';
 import MyAppointments from './components/MyAppointments'; 
+import AdminDashboard from './app/admin/dashboard/page'; 
 import Footer from './components/Footer';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
-        setUser(JSON.parse(storedUser));
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
       } catch (error) {
         console.error("Erro ao carregar usuário:", error);
+        localStorage.removeItem('user');
       }
     }
+    setInitializing(false);
   }, []); 
+
+  
+  if (initializing) {
+    return (
+      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-amber-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <Router>
@@ -52,11 +66,23 @@ function App() {
               }
             />
 
-            
             <Route
               path="/my-appointments"
-              element={<MyAppointments user={user} />}
+              element={user ? <MyAppointments user={user} /> : <Navigate to="/" />}
             />
+
+            
+            <Route
+              path="/admin/dashboard"
+              element={
+                (user?.role === 'admin' || user?.email === 'futbrasss@gmail.com') 
+                ? <AdminDashboard /> 
+                : <Navigate to="/" />
+              }
+            />
+
+            
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
 

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Lock, User, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 
 const AuthModal = ({ onClose, setUser, defaultTab = 'login' }) => {
-  const API_BASE_URL = 'https://api-barbershop-zklu.onrender.com';
+  
+  const API_URL = 'https://api-barbershop-zklu.onrender.com';
+  const navigate = useNavigate(); 
 
   const [isLogin, setIsLogin] = useState(defaultTab === 'login');
   const [loading, setLoading] = useState(false);
@@ -33,15 +36,27 @@ const AuthModal = ({ onClose, setUser, defaultTab = 'login' }) => {
         ? { email: formData.email, password: formData.password }
         : { ...formData };
 
-      const { data } = await axios.post(`${API_BASE_URL}${endpoint}`, payload);
+      
+      const { data } = await axios.post(`${API_URL}${endpoint}`, payload);
 
       if (isLogin) {
+        
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        
+        
         setUser(data.user);
-        onClose();
+        
+        
+        if (data.user.role === 'admin') {
+          
+          window.location.href = '/admin/dashboard';
+        } else {
+          onClose();
+          navigate('/');
+        }
       } else {
-        alert('Conta criada com sucesso! Agora faça login para continuar.');
+        alert('Conta criada com sucesso! Agora faça login.');
         setIsLogin(true);
         setFormData({ name: '', email: '', password: '', phone: '' });
       }
@@ -49,7 +64,7 @@ const AuthModal = ({ onClose, setUser, defaultTab = 'login' }) => {
       console.error("Erro na autenticação:", err);
       const msg = err.response?.data?.msg 
         || err.response?.data?.error 
-        || 'Erro ao conectar com o servidor.';
+        || 'Erro ao conectar com o servidor no Render.';
       setError(msg);
     } finally {
       setLoading(false);
@@ -58,13 +73,9 @@ const AuthModal = ({ onClose, setUser, defaultTab = 'login' }) => {
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-      
       <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={onClose}></div>
 
-      
       <div className="relative bg-[#121212] border border-amber-600/30 w-full max-w-md rounded-xl shadow-2xl flex flex-col max-h-[90vh]">
-        
-        
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-50 text-zinc-500 hover:text-white transition-all bg-[#121212]/50 p-1 rounded-full"
@@ -72,17 +83,10 @@ const AuthModal = ({ onClose, setUser, defaultTab = 'login' }) => {
           <X size={24} />
         </button>
 
-        
         <div className="p-8 overflow-y-auto custom-scrollbar">
           <h2 className="text-3xl font-serif font-bold text-white mb-1 italic">
-            {isLogin ? 'Bem-vindo de volta' : 'Crie sua conta na VintageCuts'}
+            {isLogin ? 'Bem-vindo de volta' : 'Crie sua conta'}
           </h2>
-
-          <p className="text-zinc-400 text-sm mb-6">
-            {isLogin
-              ? 'Entre para agendar seu horário.'
-              : 'Cadastre-se gratuitamente para reservar seu momento.'}
-          </p>
 
           {error && (
             <p className="bg-red-900/30 border border-red-600/50 text-red-300 p-3 text-xs mb-6 text-center rounded">
@@ -132,26 +136,18 @@ const AuthModal = ({ onClose, setUser, defaultTab = 'login' }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-amber-600 hover:bg-amber-500 text-black py-4 font-black uppercase text-xs tracking-[0.25em] transition-all rounded flex justify-center items-center gap-2 disabled:opacity-60"
+              className="w-full bg-amber-600 hover:bg-amber-500 text-black py-4 font-black uppercase text-xs tracking-[0.25em] transition-all rounded flex justify-center items-center gap-2"
             >
-              {loading ? (
-                <Loader2 className="animate-spin" size={20} />
-              ) : isLogin ? (
-                'ENTRAR'
-              ) : (
-                'CADASTRAR'
-              )}
+              {loading ? <Loader2 className="animate-spin" size={20} /> : isLogin ? 'ENTRAR' : 'CADASTRAR'}
             </button>
           </form>
 
-          <div className="mt-6 text-center pb-2">
+          <div className="mt-6 text-center">
             <button
               onClick={() => setIsLogin(!isLogin)}
               className="text-amber-500 hover:text-amber-400 text-xs font-bold uppercase tracking-widest transition-all"
             >
-              {isLogin
-                ? 'Ainda não tem conta? Cadastre-se'
-                : 'Já tem conta? Faça login'}
+              {isLogin ? 'Ainda não tem conta? Cadastre-se' : 'Já tem conta? Faça login'}
             </button>
           </div>
         </div>
