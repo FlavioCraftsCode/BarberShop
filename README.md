@@ -2,7 +2,7 @@
 
 O **VintageCuts** é uma plataforma moderna de agendamento online para barbearias, desenvolvida para simplificar a conexão entre o barbeiro e o cliente. O projeto conta com uma interface minimalista e um sistema de gerenciamento em tempo real.
 
-🚀 **Link do Projeto:** [Acesse aqui o VintageCuts](https://delicate-pavlova-f3b7f4.netlify.app/)
+🚀 **Link do Projeto:** [Acesse aqui o VintageCuts](https://glittering-boba-2f664e.netlify.app/)
 
 ---
 
